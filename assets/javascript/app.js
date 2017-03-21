@@ -1,0 +1,2 @@
+var topics = [];
+var userInput = "";

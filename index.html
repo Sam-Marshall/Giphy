@@ -1,13 +1,145 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Oh The Places We'll Go</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="./assets/css/style.css">
-	<script type="text/javascript" src="./assets/javascript.app.js"></script>
-	<script src="https://code.jquery.com/jquery.js"></script>
+	<!-- <script type="text/javascript" src="./assets/javascript/app.js"></script> -->
+	<style type="text/css">
+		*{
+			box-sizing: border-box;
+		}
+		.container{
+			display: inline-block;
+		}
+		.wonderButton{
+			margin: 5px;
+		}
+		#imagesHere{
+			margin: 5px;
+		}
+	</style>
+
 </head>
 <body>
+
+	<div class="container">
+
+		<div class="row">
+			<div class="col-sm-12" id="buttonsHere">
+			</div>
+		</div>
+		<div class="row">
+			
+			<div class="col-sm-7">
+				<div id="imagesHere" class="pull-left">
+				</div>
+
+			</div>
+			
+			<div class="col-sm-4 pull-right" id="userInputButtons">
+				<form>
+					<h3>Add a Wonder!</h3>
+					<input type="text" id="userInput">
+					<br><br>
+					<input type="submit" class="btn btn-md btn-success" id="submitButton">
+				</form>
+
+			</div>
+
+		</div>
+
+	</div>
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script type="text/javascript">
+		
+		window.onload = function(){
+
+		var wonderArray = ["Great Wall of China", "Christ the Redeemer", "Machu Picchu", "Chicen Itza", "The Roman Colosseum", "Taj Mahal", "Petra", "Leaning Tower of Pisa", "Hagia Sofia", "Stonehenge", "Pyramids of Giza", "Galapagos Islands", "Great Barrier Reef", "Angkor Wat", "Easter Island"];
+
+		console.log(wonderArray);
+
+		function renderButtons(){
+
+			for (var i = 0; i < wonderArray.length; i++){
+				var buttonNew = $("<button>");
+				buttonNew.addClass("wonderButton btn btn-success btn-sm");
+				buttonNew.attr('data-name', wonderArray[i]);
+				buttonNew.text(wonderArray[i]);
+				$("#buttonsHere").append(buttonNew);
+
+			}
+
+		}
+
+		function ajaxReference(){
+			var wonderSearch = $(this).attr('data-name');
+			console.log(wonderSearch);
+			var wonderSearchPlus = wonderSearch.split(' ').join('+');
+
+			var urlQuery = "http://api.giphy.com/v1/gifs/search?q=" + wonderSearchPlus + "&api_key=dc6zaTOxFJmzC&rating=g&limit=10";
+			console.log(urlQuery);
+
+		    $.ajax({
+		        url: urlQuery,
+		        method: "GET"
+	        }).done(function(response){
+
+				var results = response.data;
+				console.log(results);
+
+				$("#imagesHere").empty();
+				
+				for (var i = 0; i < results.length; i++){
+
+					var newDiv = $("<div>");
+					console.log(i);
+					var imageAdd = $("<img>");
+					imageAdd.addClass('giphy');
+					var imageSource = results[i].images.fixed_height.url;
+					imageAdd.attr('src', imageSource);
+					var p = $("<p>").text("Rating: " + results[i].rating);
+					newDiv.append(p);
+					newDiv.append(imageAdd);
+					$("#imagesHere").append(newDiv);
+
+			}
+
+			});
+		}
+
+		$("#submitButton").on('click', function(event){
+
+			event.preventDefault();
+			var wonder = $("#userInput").val().trim();
+
+			if (wonder === ''){
+				alert("Please enter a value");
+
+		}
+			
+			else {
+
+			$("#userInput").val('');
+			wonderArray.push(wonder);
+			var buttonNew = $("<button>");
+			buttonNew.addClass("wonderButton btn btn-success btn-sm");
+			buttonNew.attr('data-name', wonder);
+			buttonNew.text(wonder);
+			$("#buttonsHere").append(buttonNew);
+			
+		}
+
+		});
+
+		$(document).on('click', '.wonderButton', ajaxReference);
+
+		renderButtons();
+
+		}
+
+
+	</script>
 
 </body>
 </html>
