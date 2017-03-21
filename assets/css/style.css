@@ -4,6 +4,20 @@
 #userInput{
 	width: 100%;
 }
-.container{
-	margin: 15px;
+
+body{
+	font-family: 'Georgia';
+	background-image: url('../images/topography.png');			
+}
+.container-fluid{
+	background-image: cover;
+	background-size: auto auto;
+	background-repeat: no-repeat;
+}
+.wonderButton{
+	margin: 5px;
+}
+.imageDiv{
+	padding: 2px;
+	padding-left: 2px;
 }
