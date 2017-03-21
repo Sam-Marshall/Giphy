@@ -23,7 +23,7 @@ function renderButtons(){
 function ajaxReference(){
 	var wonderSearch = $(this).attr('data-name');
 	var wonderSearchPlus = wonderSearch.split(' ').join('+');
-	var urlQuery = "http://api.giphy.com/v1/gifs/search?q=" + wonderSearchPlus + "&api_key=dc6zaTOxFJmzC&rating=g&limit=10";
+	var urlQuery = "https://api.giphy.com/v1/gifs/search?q=" + wonderSearchPlus + "&api_key=dc6zaTOxFJmzC&rating=g&limit=10";
 
 	console.log(wonderSearch);	
 	
@@ -86,7 +86,7 @@ $submitButton.on('click', function(event){
 		alert("Please enter a value");
 
 	}
-	
+
 	else {
 
 		$("#userInput").val('');
