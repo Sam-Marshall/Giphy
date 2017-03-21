@@ -81,21 +81,12 @@ $submitButton.on('click', function(event){
 	event.preventDefault();
 	var wonder = $("#userInput").val().trim();
 
-	for (var i = 0; i < wonderArray.length; i++){
-		if (wonder === wonderArray[i]){
-			inArray = true;
-		}
-	}
-
 	if (wonder === ''){
 
 		alert("Please enter a value");
 
 	}
-	else if (inArray === true){
-		alert(wonder + " button already exists. Please try again.");
-		$("#userInput").val('');
-	}
+	
 	else {
 
 		$("#userInput").val('');
